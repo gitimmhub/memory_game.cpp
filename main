@@ -1,0 +1,176 @@
+///Código feito pelos alunos: Amandy da Silva, Bianca Camila Correa, Cleiton Prange, Matheus Armando Timm Barbiéri
+#include <iostream>
+#include <time.h>
+#include <stdlib.h>
+#include <locale.h>
+
+using namespace std;
+
+int main(){
+
+    setlocale(LC_ALL,"Portuguese");
+    srand(time(NULL));
+
+    int matrizprincipal[4][4]={1,4,5,2,7,2,8,7,3,6,1,4,6,5,3,8}; //Aqui declara
+    int matrizgabarito[4][4]={};
+    int matrizjogo[4][4]={};
+    int matrizpzerar[4][4]={};
+    int quebraloop1=1, quebraloop2=1; //OS QUEBRALOOPS INICIAM EM 1, POIS É A CONDIÇÃO NECESSÁRIA PARA O FUNCIONAMENTO DO LOOP DE DIGITAÇÃO
+    int i,j,k=3; // "I" PARA LINHAS, "J" PARA COLUNAS, "K" PARA FAZERMOS AS OPERAÇÕES
+    int ale;
+    int pares=0;
+    int a1, a2, b1, b2;
+    int chances=24;
+
+    ale = rand()%4+1; //AQUI OCORRE UMA OPERAÇÃO QUE RESULTA EM UM RESULTADO ALEATORIO ENTRE 1 E 4 PARA O SWITCH
+
+    switch (ale){
+        case 1: //ESSE CASE SERVE PARA IGUALAR A MATRIZ GABARITO A PRINCIPAL
+            for(i=0;i<4;i++){
+                for(j=0;j<4;j++){
+                    matrizgabarito[i][j]=matrizprincipal[i][j];
+                }
+            }
+            break;
+        case 2: //ESSE CASE SERVE PARA FAZERMOS A TRANSPOSTA DA MATRIZ PRINCIPAL
+            for(i=0;i<4;i++){
+                for(j=0;j<4;j++){
+                    matrizgabarito[i][j]=matrizprincipal[j][i];
+                }
+            }
+            break;
+        case 3: //ESSE CASE SERVE PARA INVERTERMOS AS LINHAS DE POSIÇÃO
+            for(i=0;i<4;i++){
+                for(j=0;j<4;j++){
+                    matrizgabarito[k][j]=matrizprincipal[i][j]; //O "K" ESTÁ PRESENTE AQUI PARA COMEÇAR COM A LINHA 3
+                }
+                k--;
+            }
+            break;
+        case 4: //ESSE CASE SERVE PARA INVERTERMOS AS COLUNAS DE POSIÇÃO
+            for(i=0;i<4;i++){
+                for(j=0;j<4;j++){
+                    matrizgabarito[j][k]=matrizprincipal[j][i]; //O "K" ESTÁ PRESENTE AQUI PARA COMEÇAR COM A COLUNA 3
+                }
+                k--;
+            }
+            break;
+    }
+    while(chances>=1 and pares<=7){ //SE AS CHANCES FOREM MENORES QUE 1 E OS PARES FOREM MAIORES QUE 7 O JOGO ACABA
+        quebraloop1=1;
+        quebraloop2=1;
+
+        if(chances==24){ // INÍCIO DO JOGO COM CHANCES IGUAIS A 24
+            cout<<"Procure os pares! | Chances: "<<chances<<" | Pontuação: "<<pares<<"\n\n";
+        }
+
+        for(i=0;i<4;i++){ //EXIBE A MATRIZ
+            for(j=0;j<4;j++){
+                cout<<matrizjogo[i][j]<<"\t";
+            }
+            cout<<"\t\n";
+        }
+        while(quebraloop1==1){//O QUEBRALOOP1 SERVE PARA O JOGO SÓ SAIR DO LOOP QUANDO O USUARIO DIGITAR OS NÚMEROS VALIDOS
+            cout<<"\nEscolha as posições do primeiro número: \n ";//AQUI OCORRE O DIGÍTO DO PRIMEIRO NÚMERO
+            cin>>a1>>a2;
+
+            if(a1>3 or a2>3 or a1<0 or a2<0) { //VERIFICA SE OS NÚMEROS ESTÃO VÁLIDOS PARA MATRIZ DO JOGO - MENOR/IGUAL A 3 E MAIOR/IGUAL A 0
+
+                cout<<"\nPosição invalida, jogue de novo.\n";
+
+            }else if(matrizjogo[a1][a2]!=0){//SE O NÚMERO DIGITADO NAO FOR 0 ELE É INVALIDO
+
+                cout<<"\nEsse número ja foi digitado, digite outro. \n";
+
+            }else{
+
+                system("cls");
+                cout<<"Procure os pares! | Chances: "<<chances<<" | Pontuação: "<<pares<<"\n\n";//AQUI MOSTRARA A MATRIZ COM O NÚMERO DIGITADO
+
+                for(i=0;i<4;i++){ //ESSE FOR SERVE PARA MOSTRAR O NÚMERO DIGITADO NA TELA
+                    for(j=0;j<4;j++){
+                        matrizjogo[a1][a2]=matrizgabarito[a1][a2];
+                        cout<<matrizjogo[i][j]<<"\t";
+                    }
+                    cout<<"\t\n";
+                }
+                quebraloop1++; //ADICIONA 1 AO QUEBRALOOP1, SAINDO DO LOOP
+            }
+        }
+
+        while(quebraloop2==1){ //O QUEBRALOOP2 SERVE PARA O JOGO SÓ SAIR DO LOOP QUANDO O USUARIO DIGITAR OS NÚMEROS VALIDOS
+            cout<<"\nEscolha as posições do segundo número: \n ";//AQUI OCORRE O DIGÍTO DO SEGUNDO NÚMERO
+            cin>>b1>>b2;
+
+            if(b1>3 or b2>3 or b1<0 or b2<0) {//VERIFICA SE OS NÚMEROS ESTÃO VÁLIDOS PARA MATRIZ DO JOGO - MENOR/IGUAL A 3 E MAIOR/IGUAL A 0
+
+                cout<<"\nPosição invalida, jogue de novo.\n";
+
+            }else if(matrizjogo[b1][b2]!=0){//SE O NÚMERO DIGITADO NAO FOR 0 ELE É INVALIDO
+
+                cout<<"\nEsse número ja foi digitado, digite outro. \n";
+
+            }else{
+
+                system("cls");
+                cout<<"Procure os pares! | Chances: "<<chances<<" | Pontuação: "<<pares<<"\n\n";//AQUI MOSTRARA A MATRIZ COM O NÚMERO DIGITADO
+
+                for(i=0;i<4;i++){ //ESSE FOR SERVE PARA MOSTRAR O NÚMERO DIGITADO NA TELA
+                    for(j=0;j<4;j++){
+                        matrizjogo[b1][b2]=matrizgabarito[b1][b2];
+                        cout<<matrizjogo[i][j]<<"\t";
+                    }
+                    cout<<"\t\n";
+                }
+                quebraloop2++;//ADICIONA 1 AO QUEBRALOOP2, SAINDO DO LOOP
+            }
+        }
+        cout<<endl;
+        system("pause");
+        system("cls");
+
+        if(matrizjogo[b1][b2]==matrizjogo[a1][a2]) {//SE OS NÚMEROS DIGITADOS FOREM IGUAIS, ENTRARA NO LOOP
+            system("cls");
+
+            if(pares==7){//SE OS PARES FOREM IGUAIS A 7, APENAS ADICIONA 1 A VARIAVEL "PARES" SAINDO DO LOOP PRINCIPAL DO JOGO
+                pares++;
+            }else{//SE OS PARES NAO FOREM IGUAIS A 7, APARECE O TEXTO JOGUE NOVAMENTE
+                pares++;
+                cout<<"Você achou um par, jogue novamente. | Chances: "<<chances<<" | Pontuação: "<<pares<<"\n\n";
+
+                matrizjogo[a1][a2]=matrizgabarito[a1][a2]; //AQUI IGUALA A MATRIZ JOGO COM A GABARITO, FAZENDO OS NÚMEROS FICAREM NA TELA
+                matrizjogo[b1][b2]=matrizgabarito[b1][b2];
+
+                chances--;
+            }
+
+        }else{//SE OS NÚMEROS DIGITADOS FOREM DIFERENTES, ENTRA NO LOOP
+            if(chances==1){//SE SO HOUVER UMA CHANCE APENAS DECREMENTARA A VARIAVEL, SAINDO DO LOOP DO JOGO
+                chances--;
+            }else{//SE NAO FOR A ULTIMA CHANCE APARECERA A MENSAGEM DE TENTE DE NOVO
+                chances--;
+                cout<<"Nenhum par encontrado, tente de novo. | Chances: "<<chances<<" | Pontuação: "<<pares<<"\n\n";
+
+                matrizjogo[a1][a2]=matrizpzerar[a1][a2]; //AQUI ZERA A MATRIZ JOGO, FAZENDO COM QUE OS NÚMEROS DIGITADOS VOLTEM A SER 0
+                matrizjogo[b1][b2]=matrizpzerar[b1][b2];
+
+            }
+        }
+    }
+
+    if(pares==8){ //SE OS PARES FOREM 8 APARECE ESSA TELA
+        cout<<"-------------------------------------------------------------\n\n\n";
+        cout<<"                  Parabéns Você venceu!                             \n";
+        cout<<"                       Pontos: "<<pares<<"                     \n";
+        cout<<"                  Chances restantes: "<<chances<<"\n";
+        cout<<"\n\n\n-------------------------------------------------------------";
+    }else{ //SE NAO FOR APARECE ESSA
+        cout<<"-------------------------------------------------------------\n\n\n";
+        cout<<"                       GAME OVER                              \n";
+        cout<<"                       Pontos: "<<pares<<"                     \n";
+        cout<<"                  Chances restantes: "<<chances<<"\n";
+        cout<<"\n\n\n-------------------------------------------------------------";
+    }
+
+    return 0;
+}
